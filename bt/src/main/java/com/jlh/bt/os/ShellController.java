@@ -106,7 +106,7 @@ public class ShellController {
     private int getCurrentVolumeDev() {
         try {
             Process proc = Runtime.getRuntime().exec("wpctl get-volume @DEFAULT_AUDIO_SINK@");
-            String out = proc.inputReader().readLine();
+            String out = proc.inputReader().readLine().replace("[MUTED]", "");
             return (int)(Double.parseDouble(out.substring(7)) * 100);
         } catch (IOException e) {
             logger.error("DEV: IO exception occurred while trying to get system volume", e);
