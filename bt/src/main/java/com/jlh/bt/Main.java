@@ -81,16 +81,16 @@ public class Main {
 
     private void registerCanCallbacks() {
         CANDriver can = CANDriver.getInstance();
-        can.registerCallback(() -> {menu.focusUp(); onboardUI.updateMenu();}, CONSTANTS.UP_BUTTON(), false);
-        can.registerCallback(() -> {menu.focusDown(); onboardUI.updateMenu();}, CONSTANTS.DOWN_BUTTON(), false);
-        can.registerCallback(() -> {menu.ascend(); onboardUI.updateMenu();}, CONSTANTS.LEFT_BUTTON(), false);
-        can.registerCallback(() -> {menu.descend(); onboardUI.updateMenu();}, CONSTANTS.RIGHT_BUTTON(), false);
-        can.registerCallback(() -> media.setPlaylist(menu.getPlaylist()), CONSTANTS.OK_BUTTON(), false);
+        can.registerCallback(() -> {menu.focusUp(); onboardUI.updateMenu();},   CONSTANTS.STEERING_WHEEL_DEVICE(), CONSTANTS.SW_UP_BUTTON(), false);
+        can.registerCallback(() -> {menu.focusDown(); onboardUI.updateMenu();}, CONSTANTS.STEERING_WHEEL_DEVICE(), CONSTANTS.SW_DOWN_BUTTON(), false);
+        can.registerCallback(() -> {menu.ascend(); onboardUI.updateMenu();},    CONSTANTS.STEERING_WHEEL_DEVICE(), CONSTANTS.SW_LEFT_BUTTON(), false);
+        can.registerCallback(() -> {menu.descend(); onboardUI.updateMenu();},   CONSTANTS.STEERING_WHEEL_DEVICE(), CONSTANTS.SW_RIGHT_BUTTON(), false);
+        can.registerCallback(() -> media.setPlaylist(menu.getPlaylist()),       CONSTANTS.STEERING_WHEEL_DEVICE(), CONSTANTS.SW_OK_BUTTON(), false);
 
-        can.registerCallback(() -> GUIDriver.toggleScene(), CONSTANTS.M_BUTTON(), false);
+        can.registerCallback(() -> GUIDriver.toggleScene(), CONSTANTS.STEERING_WHEEL_DEVICE(), CONSTANTS.SW_M_BUTTON(), false);
 
-        can.registerCallback(() -> media.skip(), CONSTANTS.SKIP_BUTTON(), false);
-        can.registerCallback(() -> media.previous(), CONSTANTS.PREV_BUTTON(), false);
+        can.registerCallback(() -> media.skip(),     CONSTANTS.STEERING_WHEEL_DEVICE(), CONSTANTS.SW_SKIP_BUTTON(), false);
+        can.registerCallback(() -> media.previous(), CONSTANTS.STEERING_WHEEL_DEVICE(), CONSTANTS.PREV_BUTTON(), false);
         
         can.registerCallback(() -> {
             if (media.playlistExists()) {
@@ -98,21 +98,21 @@ public class Main {
                 onboardUI.toggleShuffle();
                 bluetoothUI.toggleShuffle();
             }
-        }, CONSTANTS.SHUFFLE_BUTTON(), false);
+        }, CONSTANTS.CENTER_DEVICE(), CONSTANTS.SHUFFLE_BUTTON(), false);
 
-        can.registerCallback(() -> favoritePlaylistManager.setSelectedPlaylist(0), CONSTANTS.BUTTON_0(), false);
-        can.registerCallback(() -> favoritePlaylistManager.setSelectedPlaylist(1), CONSTANTS.BUTTON_1(), false);
-        can.registerCallback(() -> favoritePlaylistManager.setSelectedPlaylist(2), CONSTANTS.BUTTON_2(), false);
-        can.registerCallback(() -> favoritePlaylistManager.setSelectedPlaylist(3), CONSTANTS.BUTTON_3(), false);
-        can.registerCallback(() -> favoritePlaylistManager.setSelectedPlaylist(4), CONSTANTS.BUTTON_4(), false);
-        can.registerCallback(() -> favoritePlaylistManager.setSelectedPlaylist(5), CONSTANTS.BUTTON_5(), false);
-        can.registerCallback(() -> favoritePlaylistManager.setSelectedPlaylist(6), CONSTANTS.BUTTON_6(), false);
-        can.registerCallback(() -> favoritePlaylistManager.setSelectedPlaylist(7), CONSTANTS.BUTTON_7(), false);
-        can.registerCallback(() -> favoritePlaylistManager.setSelectedPlaylist(8), CONSTANTS.BUTTON_8(), false);
-        can.registerCallback(() -> favoritePlaylistManager.setSelectedPlaylist(9), CONSTANTS.BUTTON_9(), false);
+        can.registerCallback(() -> favoritePlaylistManager.setSelectedPlaylist(0), CONSTANTS.CENTER_DEVICE(), CONSTANTS.BUTTON_0(), false);
+        can.registerCallback(() -> favoritePlaylistManager.setSelectedPlaylist(1), CONSTANTS.CENTER_DEVICE(), CONSTANTS.BUTTON_1(), false);
+        can.registerCallback(() -> favoritePlaylistManager.setSelectedPlaylist(2), CONSTANTS.CENTER_DEVICE(), CONSTANTS.BUTTON_2(), false);
+        can.registerCallback(() -> favoritePlaylistManager.setSelectedPlaylist(3), CONSTANTS.CENTER_DEVICE(), CONSTANTS.BUTTON_3(), false);
+        can.registerCallback(() -> favoritePlaylistManager.setSelectedPlaylist(4), CONSTANTS.CENTER_DEVICE(), CONSTANTS.BUTTON_4(), false);
+        can.registerCallback(() -> favoritePlaylistManager.setSelectedPlaylist(5), CONSTANTS.CENTER_DEVICE(), CONSTANTS.BUTTON_5(), false);
+        can.registerCallback(() -> favoritePlaylistManager.setSelectedPlaylist(6), CONSTANTS.CENTER_DEVICE(), CONSTANTS.BUTTON_6(), false);
+        can.registerCallback(() -> favoritePlaylistManager.setSelectedPlaylist(7), CONSTANTS.CENTER_DEVICE(), CONSTANTS.BUTTON_7(), false);
+        can.registerCallback(() -> favoritePlaylistManager.setSelectedPlaylist(8), CONSTANTS.CENTER_DEVICE(), CONSTANTS.BUTTON_8(), false);
+        can.registerCallback(() -> favoritePlaylistManager.setSelectedPlaylist(9), CONSTANTS.CENTER_DEVICE(), CONSTANTS.BUTTON_9(), false);
         
-        can.registerCallback(() -> favoritePlaylistManager.playCurrentlySelected(), CONSTANTS.HASHTAG_BUTTON(), false);
-        can.registerCallback(() -> favoritePlaylistManager.setFavorite(), CONSTANTS.STAR_BUTTON(), false);
+        can.registerCallback(() -> favoritePlaylistManager.playCurrentlySelected(), CONSTANTS.CENTER_DEVICE(), CONSTANTS.HASHTAG_BUTTON(), false);
+        can.registerCallback(() -> favoritePlaylistManager.setFavorite(), CONSTANTS.CENTER_DEVICE(), CONSTANTS.STAR_BUTTON(), false);
 
     }
 

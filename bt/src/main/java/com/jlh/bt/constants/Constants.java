@@ -65,26 +65,28 @@ public abstract class Constants {
 
     //CAN codes
     //steering wheel
-    public abstract int LEFT_BUTTON();
-    public abstract int RIGHT_BUTTON();
-    public abstract int UP_BUTTON();
-    public abstract int DOWN_BUTTON();
-    public abstract int OK_BUTTON(); 
-    public abstract int SKIP_BUTTON();
-    public abstract int PREV_BUTTON();
-    public abstract int VOLUME_INCREMENT_BUTTON();
-    public abstract int VOLUME_DECREMENT_BUTTON();
-    public abstract int MUTE_BUTTON();
-    public abstract int M_BUTTON();
+    public abstract int STEERING_WHEEL_DEVICE();
+    public abstract int SW_LEFT_BUTTON();
+    public abstract int SW_RIGHT_BUTTON();
+    public abstract int SW_UP_BUTTON();
+    public abstract int SW_DOWN_BUTTON();
+    public abstract int SW_OK_BUTTON(); 
+    public abstract int SW_SKIP_BUTTON();
+    public abstract int SW_PREV_BUTTON();
+    public abstract int SW_VOLUME_INCREMENT_BUTTON();
+    public abstract int SW_VOLUME_DECREMENT_BUTTON();
+    public abstract int SW_MUTE_BUTTON();
+    public abstract int SW_M_BUTTON();
 
     //center control panel
+    public abstract int CENTER_DEVICE();
     public abstract int SHUFFLE_BUTTON();
     public abstract int EQUALIZER_BUTTON();
     public abstract int RADIO_BUTTON();
-    //secondary mute button - need to determine if this has a different ID or not
+    public abstract int MUTE_BUTTON();
     public abstract int MEDIA_BUTTON();
-    //clock button retains OEM functionality
     public abstract int PHONE_BUTTON();
+    //clock button retains OEM functionality
     //menu button retains OEM functionality
 
     public abstract int BUTTON_1();
@@ -99,6 +101,22 @@ public abstract class Constants {
     public abstract int BUTTON_0();
     public abstract int HASHTAG_BUTTON();
     public abstract int STAR_BUTTON();
+
+    public abstract int LEFT_BUTTON();
+    public abstract int RIGHT_BUTTON();
+    public abstract int UP_BUTTON();
+    public abstract int DOWN_BUTTON();
+    public abstract int OK_BUTTON(); 
+    public abstract int SKIP_BUTTON();
+    public abstract int PREV_BUTTON();
+
+    //unused
+    public abstract int PHONE_HANG_UP_BUTTON();
+    public abstract int PHONE_ANSWER_BUTTON();
+    public abstract int EJECT_BUTTON();
+    public abstract int PAUSE_PLAY_BUTTON();
+    public abstract int POWER_BUTTON();
+    //volume and tune knob also unused
 
     public final String BLANK_IMAGE_HEX_STRING() {return "89 50 4E 47 0D 0A 1A 0A 00 00 00 0D 49 48 44 52 00 00 00 01 00 00 00 01 08 02 00 00 00 90 77 53 DE 00 00 00 0F 49 44 41 54 78 01 01 04 00 FB FF 00 00 00 00 00 04 00 01 65 49 C3 60 00 00 00 00 49 45 4E 44 AE 42 60 82";}
 }

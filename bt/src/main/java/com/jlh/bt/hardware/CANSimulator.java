@@ -31,7 +31,7 @@ class CANSimulator extends CANDriver implements NativeKeyListener {
     }
 
     @Override
-    public void registerCallback(Runnable callback, int canID, boolean bt) {
+    public void registerCallback(Runnable callback, int canID, int buttonID, boolean bt) {
         if (bt) {
             btCallbacks.put(canID, callback);
         }else {

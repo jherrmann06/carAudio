@@ -17,7 +17,7 @@ public abstract class CANDriver {
         return instance;
     }
 
-    public abstract void registerCallback(Runnable callback, int canID, boolean bluetooth);
+    public abstract void registerCallback(Runnable callback, int deviceID, int buttonID, boolean bluetooth);
 
     /**
      * Used to disable button presses so that OEM car clock usage doesn't result in unwanted changes to our system
