@@ -111,7 +111,8 @@ public class Main {
         
         // steering wheel only
         can.registerCallback(() -> GUIDriver.toggleScene(), CONSTANTS.STEERING_WHEEL_DEVICE(), CONSTANTS.SW_M_BUTTON(), false);
-        //TODO volume ctrl
+        can.registerCallback(() -> ShellController.getInstance().incrementVolume(), CONSTANTS.STEERING_WHEEL_DEVICE(), CONSTANTS.SW_VOLUME_INCREMENT_BUTTON(), false);
+        can.registerCallback(() -> ShellController.getInstance().decrementVolume(), CONSTANTS.STEERING_WHEEL_DEVICE(), CONSTANTS.SW_VOLUME_DECREMENT_BUTTON(), false);
 
         // center panel only
         can.registerCallback(() -> {
