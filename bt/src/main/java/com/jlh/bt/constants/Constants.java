@@ -64,6 +64,7 @@ public abstract class Constants {
     public final double ONBOARD_MEDIA_MAX_VOLUME() {return 1;}
 
     //CAN codes
+    public final String CAN_DEVICE() {return "can0";}
     //steering wheel
     public abstract int STEERING_WHEEL_DEVICE();
     public abstract int SW_LEFT_BUTTON();

@@ -1,6 +1,7 @@
 package com.jlh.bt.hardware;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +12,7 @@ import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 
 //visibility modifier omitted intentionally
-class CANSimulator extends CANDriver implements NativeKeyListener {
+class CANSimulator extends CANListener implements NativeKeyListener {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -45,7 +46,7 @@ class CANSimulator extends CANDriver implements NativeKeyListener {
     }
 
     @Override
-    public boolean isEnabled() {
+    public boolean isListening() {
         return isEnabled;
     }
 
@@ -69,5 +70,8 @@ class CANSimulator extends CANDriver implements NativeKeyListener {
             }
         }
     }
+
+    @Override
+    public void registerDevices(List<Integer> devices) {/* no-op in dev mode */}
     
 }

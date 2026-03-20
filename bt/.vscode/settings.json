@@ -2,5 +2,6 @@
     "cSpell.words": [
         "bluez",
         "dbus"
-    ]
+    ],
+    "java.configuration.updateBuildConfiguration": "automatic"
 }

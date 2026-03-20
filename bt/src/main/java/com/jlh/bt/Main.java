@@ -11,7 +11,7 @@ import com.jlh.bt.constants.Constants;
 import com.jlh.bt.gui.MusicSpotlightController;
 import com.jlh.bt.gui.GUIDriver;
 import com.jlh.bt.gui.OnboardMediaSelectorController;
-import com.jlh.bt.hardware.CANDriver;
+import com.jlh.bt.hardware.CANListener;
 import com.jlh.bt.onboard.media.FavoritePlaylistManager;
 import com.jlh.bt.onboard.media.MediaController;
 import com.jlh.bt.onboard.menu.MenuController;
@@ -80,7 +80,7 @@ public class Main {
     }
 
     private void registerCanCallbacks() {
-        CANDriver can = CANDriver.getInstance();
+        CANListener can = CANListener.getInstance();
         can.registerCallback(() -> {menu.focusUp(); onboardUI.updateMenu();},   CONSTANTS.STEERING_WHEEL_DEVICE(), CONSTANTS.SW_UP_BUTTON(), false);
         can.registerCallback(() -> {menu.focusDown(); onboardUI.updateMenu();}, CONSTANTS.STEERING_WHEEL_DEVICE(), CONSTANTS.SW_DOWN_BUTTON(), false);
         can.registerCallback(() -> {menu.ascend(); onboardUI.updateMenu();},    CONSTANTS.STEERING_WHEEL_DEVICE(), CONSTANTS.SW_LEFT_BUTTON(), false);
