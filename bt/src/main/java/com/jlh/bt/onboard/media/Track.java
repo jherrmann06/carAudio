@@ -3,6 +3,9 @@ package com.jlh.bt.onboard.media;
 import java.io.File;
 import java.util.Comparator;
 
+/**
+ * This class represents a single track. 
+ */
 public record Track(int id, String name, String artist, String album, String genre, int trackNo, int albumReleaseYear, File file) implements Comparable<Track> {
 
     public static final Track NOTHING = new Track(-1, "No track", "-", "-", "", -1, -1, null);

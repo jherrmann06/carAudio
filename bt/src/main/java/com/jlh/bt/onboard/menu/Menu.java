@@ -16,6 +16,11 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 
+/**
+ * This class represents a single menu. A menu contains any number of elements
+ * and may have a single parent menu. This class also tracks which element of 
+ * the menu is selected.
+ */
 public class Menu {
     
     private Menu parentMenu;

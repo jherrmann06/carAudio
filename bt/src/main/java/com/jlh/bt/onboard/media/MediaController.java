@@ -71,7 +71,7 @@ public class MediaController {
         }
     }
 
-    public void fastForward() {
+    public void skip() {
         if (playlist != null) {
             playlist.nextTrack();
             createNewMediaPlayer(playlist.getCurrentTrack());

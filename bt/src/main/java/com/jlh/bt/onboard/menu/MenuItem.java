@@ -11,6 +11,12 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Paint;
 
+/**
+ * This class represents a menu item. Menu items can be an access point to a
+ * deeper menu, such as a genre or artist menu. It can also represent a single
+ * track. The menu element also contains a reference to a playlist which should
+ * play if this menu is interacted with.
+ */
 public class MenuItem implements MenuElement {
 
     public final static MenuItem NO_ITEMS_ITEM = new MenuItem("No items", null, null, 0, 0); 

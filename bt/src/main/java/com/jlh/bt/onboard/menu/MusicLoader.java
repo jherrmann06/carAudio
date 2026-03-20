@@ -27,6 +27,9 @@ import com.mpatric.mp3agic.Mp3File;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * This class loads music files from the disk and creates the root menu based on their metadata.
+ */
 public class MusicLoader {
 
     public record TrackStats(int trackCount, int artistCount, int albumCount, int coverCount, int genreCount) {}

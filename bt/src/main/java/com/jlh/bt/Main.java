@@ -89,7 +89,7 @@ public class Main {
 
         can.registerCallback(() -> GUIDriver.toggleScene(), CONSTANTS.M_BUTTON(), false);
 
-        can.registerCallback(() -> media.fastForward(), CONSTANTS.SKIP_BUTTON(), false);
+        can.registerCallback(() -> media.skip(), CONSTANTS.SKIP_BUTTON(), false);
         can.registerCallback(() -> media.previous(), CONSTANTS.PREV_BUTTON(), false);
         
         can.registerCallback(() -> {

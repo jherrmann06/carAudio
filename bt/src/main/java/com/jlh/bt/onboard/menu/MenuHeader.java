@@ -9,6 +9,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Paint;
 
+/**
+ * This class represents the header UI element. 
+ * Headers contain the title of an album. 
+ */
 public class MenuHeader implements MenuElement {
 
     private final HBox box;

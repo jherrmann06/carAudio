@@ -18,6 +18,10 @@ import javafx.stage.Popup;
 import javafx.stage.Screen;
 import javafx.util.Duration;
 
+/**
+ * This class manages the favorite playlists. It handles user input processing
+ * and starts media playback.
+ */
 public class FavoritePlaylistManager {
 
     private final FavoritePlaylists favoritePlaylists;

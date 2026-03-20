@@ -6,6 +6,9 @@ import com.jlh.bt.onboard.media.Playlist;
 
 import javafx.scene.layout.VBox;
 
+/**
+ * This class provides access to the menu data structure. 
+ */
 public class MenuController {
     
     private Menu menu;

@@ -14,6 +14,9 @@ import org.slf4j.LoggerFactory;
 import com.jlh.bt.gui.NotificationSender;
 import com.jlh.bt.onboard.menu.MusicLoader;
 
+/**
+ * This class stores the user-defined favorite playlists. It is also responsible for reading and writing favorite playlist information from the disk. 
+ */
 public class FavoritePlaylists {
     
     private final HashMap<Integer, String> favorites = new HashMap<>();

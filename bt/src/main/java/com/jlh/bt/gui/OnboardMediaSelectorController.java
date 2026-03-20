@@ -27,6 +27,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
+/**
+ * This class represents the library viewing UI. This UI is defined by FXML. 
+ */
 public class OnboardMediaSelectorController {
     
     @FXML private AnchorPane menuPane;

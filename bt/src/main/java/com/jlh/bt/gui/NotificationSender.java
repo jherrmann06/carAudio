@@ -4,6 +4,9 @@ import org.controlsfx.control.Notifications;
 
 import javafx.application.Platform;
 
+/**
+ * Utility class to easily send notifications. 
+ */
 public class NotificationSender {
 
     public static void sendInfoNotification(String title, String text) {

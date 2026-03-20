@@ -11,6 +11,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * This class is the entry point of the JavaFX application. 
+ * It is responsible for launching the UI and handling scene switching. 
+ */
 public class GUIDriver extends Application {
 
     private Logger logger;

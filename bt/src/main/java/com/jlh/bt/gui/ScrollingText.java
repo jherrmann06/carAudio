@@ -10,6 +10,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.OverrunStyle;
 import javafx.util.Duration;
 
+/**
+ * This class represents a custom label which has a scrolling animation for 
+ * long text. 
+ */
 public class ScrollingText extends Label {
 
     private int index = 0;

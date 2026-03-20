@@ -24,6 +24,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
+/**
+ * This class represents the currently playing track UI. This UI is defined by FXML. 
+ */
 public class MusicSpotlightController {
 
     @FXML private Pane artist;
