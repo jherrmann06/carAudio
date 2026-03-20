@@ -12,6 +12,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.function.Function;
 
+import org.github.jamm.MemoryMeter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +35,9 @@ public class MusicLoader {
 
     public record TrackStats(int trackCount, int artistCount, int albumCount, int coverCount, int genreCount) {}
 
-    private MusicLoader() {}
+    private MusicLoader() {
+        meter = MemoryMeter.builder().build();
+    }
 
     private static MusicLoader instance = null;
 
@@ -50,6 +53,8 @@ public class MusicLoader {
 
     private final Logger logger = LoggerFactory.getLogger(MusicLoader.class);
     private final Constants CONSTANTS = Constants.getInstance();
+
+    private final MemoryMeter meter;
 
     private final FileFilter isAudioFile = (file) -> {
         if (file.isDirectory()) {
@@ -100,7 +105,13 @@ public class MusicLoader {
 
         allSongs.sortSongs();
 
-        return new Pair<Menu,Playlist>(rootMenu, allSongs);
+        Pair<Menu, Playlist> rtn = new Pair<Menu,Playlist>(rootMenu, allSongs);
+
+        String totalSize = (meter.measureDeep(rtn) / (double)(Math.pow(10, 9))) + 0.005 + ""; //gigabytes
+
+        logger.info("Menu and playlist total size: ~" + totalSize.substring(0, Math.min(4, totalSize.length())) + " gigabytes" ); 
+
+        return rtn;
     }
 
     /**
