@@ -81,17 +81,39 @@ public class Main {
 
     private void registerCanCallbacks() {
         CANListener can = CANListener.getInstance();
-        can.registerCallback(() -> {menu.focusUp(); onboardUI.updateMenu();},   CONSTANTS.STEERING_WHEEL_DEVICE(), CONSTANTS.SW_UP_BUTTON(), false);
-        can.registerCallback(() -> {menu.focusDown(); onboardUI.updateMenu();}, CONSTANTS.STEERING_WHEEL_DEVICE(), CONSTANTS.SW_DOWN_BUTTON(), false);
-        can.registerCallback(() -> {menu.ascend(); onboardUI.updateMenu();},    CONSTANTS.STEERING_WHEEL_DEVICE(), CONSTANTS.SW_LEFT_BUTTON(), false);
-        can.registerCallback(() -> {menu.descend(); onboardUI.updateMenu();},   CONSTANTS.STEERING_WHEEL_DEVICE(), CONSTANTS.SW_RIGHT_BUTTON(), false);
-        can.registerCallback(() -> media.setPlaylist(menu.getPlaylist()),       CONSTANTS.STEERING_WHEEL_DEVICE(), CONSTANTS.SW_OK_BUTTON(), false);
 
-        can.registerCallback(() -> GUIDriver.toggleScene(), CONSTANTS.STEERING_WHEEL_DEVICE(), CONSTANTS.SW_M_BUTTON(), false);
+        //common functions
+        Runnable up = () -> {menu.focusUp(); onboardUI.updateMenu();};
+        Runnable down = () -> {menu.focusDown(); onboardUI.updateMenu();};
+        Runnable left = () -> {menu.ascend(); onboardUI.updateMenu();};
+        Runnable right = () -> {menu.descend(); onboardUI.updateMenu();};
+        Runnable ok = () -> media.setPlaylist(menu.getPlaylist());
+        Runnable skip = () -> media.skip();
+        Runnable previous = () -> media.previous();
 
-        can.registerCallback(() -> media.skip(),     CONSTANTS.STEERING_WHEEL_DEVICE(), CONSTANTS.SW_SKIP_BUTTON(), false);
-        can.registerCallback(() -> media.previous(), CONSTANTS.STEERING_WHEEL_DEVICE(), CONSTANTS.PREV_BUTTON(), false);
+        can.registerCallback(up,    CONSTANTS.STEERING_WHEEL_DEVICE(), CONSTANTS.SW_UP_BUTTON(), false);
+        can.registerCallback(down,  CONSTANTS.STEERING_WHEEL_DEVICE(), CONSTANTS.SW_DOWN_BUTTON(), false);
+        can.registerCallback(left,  CONSTANTS.STEERING_WHEEL_DEVICE(), CONSTANTS.SW_LEFT_BUTTON(), false);
+        can.registerCallback(right, CONSTANTS.STEERING_WHEEL_DEVICE(), CONSTANTS.SW_RIGHT_BUTTON(), false);
+        can.registerCallback(ok,    CONSTANTS.STEERING_WHEEL_DEVICE(), CONSTANTS.SW_OK_BUTTON(), false);
+
+        can.registerCallback(skip,     CONSTANTS.STEERING_WHEEL_DEVICE(), CONSTANTS.SW_SKIP_BUTTON(), false);
+        can.registerCallback(previous, CONSTANTS.STEERING_WHEEL_DEVICE(), CONSTANTS.SW_PREV_BUTTON(), false);
+
+        can.registerCallback(up,    CONSTANTS.CENTER_DEVICE(), CONSTANTS.UP_BUTTON(), false);
+        can.registerCallback(down,  CONSTANTS.CENTER_DEVICE(), CONSTANTS.DOWN_BUTTON(), false);
+        can.registerCallback(left,  CONSTANTS.CENTER_DEVICE(), CONSTANTS.LEFT_BUTTON(), false);
+        can.registerCallback(right, CONSTANTS.CENTER_DEVICE(), CONSTANTS.RIGHT_BUTTON(), false);
+        can.registerCallback(ok,    CONSTANTS.CENTER_DEVICE(), CONSTANTS.OK_BUTTON(), false);
+
+        can.registerCallback(skip,     CONSTANTS.CENTER_DEVICE(), CONSTANTS.SKIP_BUTTON(), false);
+        can.registerCallback(previous, CONSTANTS.CENTER_DEVICE(), CONSTANTS.PREV_BUTTON(), false);
         
+        // steering wheel only
+        can.registerCallback(() -> GUIDriver.toggleScene(), CONSTANTS.STEERING_WHEEL_DEVICE(), CONSTANTS.SW_M_BUTTON(), false);
+        //TODO volume ctrl
+
+        // center panel only
         can.registerCallback(() -> {
             if (media.playlistExists()) {
                 media.toggleShuffle();
