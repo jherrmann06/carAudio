@@ -15,7 +15,8 @@ class DevConstants extends Constants {
     public String LOG_FILE_PATH() {return "/home/jake/CarDev/java-bt.log";}
     public String LOG_LEVEL() {return "debug";}
 
-    public String ONBOARD_MEDIA_DIRECTORY() {return "/home/jake/Music";}
+    public String ONBOARD_MEDIA_DIRECTORY() {return "/home/jake/Music/Ready";} 
+    public String DETACHABLE_MEDIA_DIRECTORY() {return "/home/jake/Music/SpotifyCapture";}
 
     public int STEERING_WHEEL_DEVICE() {return -1;}
     public int SW_LEFT_BUTTON() {return -1;}

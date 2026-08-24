@@ -12,7 +12,6 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.function.Function;
 
-import org.github.jamm.MemoryMeter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,9 +34,6 @@ public class MusicLoader {
 
     public record TrackStats(int trackCount, int artistCount, int albumCount, int coverCount, int genreCount) {}
 
-    private MusicLoader() {
-        meter = MemoryMeter.builder().build();
-    }
 
     private static MusicLoader instance = null;
 
@@ -53,8 +49,6 @@ public class MusicLoader {
 
     private final Logger logger = LoggerFactory.getLogger(MusicLoader.class);
     private final Constants CONSTANTS = Constants.getInstance();
-
-    private final MemoryMeter meter;
 
     private final FileFilter isAudioFile = (file) -> {
         if (file.isDirectory()) {
@@ -86,8 +80,8 @@ public class MusicLoader {
         return genrePlaylistMap.get(name);
     }
     
-    public Pair<Menu, Playlist> constructHighLevelMenu(File directory) {
-        Playlist allSongs = new Playlist("All Songs", loadMusicFiles(directory));
+    public Pair<Menu, Playlist> constructHighLevelMenu(File... directories) {
+        Playlist allSongs = new Playlist("All Songs", loadMusicFiles(directories));
 
         Menu artistMenu = getCategoryMenu(artistPlaylistMap, "Artists", (t) -> t.album());
         Menu genreMenu = getCategoryMenu(genrePlaylistMap, "Genres", (t) -> t.album() + " - " + t.artist());
@@ -107,9 +101,8 @@ public class MusicLoader {
 
         Pair<Menu, Playlist> rtn = new Pair<Menu,Playlist>(rootMenu, allSongs);
 
-        String totalSize = (meter.measureDeep(rtn) / (double)(Math.pow(10, 9))) + 0.005 + ""; //gigabytes
-
-        logger.info("Menu and playlist total size: ~" + totalSize.substring(0, Math.min(4, totalSize.length())) + " gigabytes" ); 
+       // String totalSize = (GraphLayout.parseInstance(rtn).totalSize() / (double)(Math.pow(10, 9))) + 0.005 + ""; //gigabytes
+        //logger.info("Menu and playlist total size: ~" + totalSize.substring(0, Math.min(4, totalSize.length())) + " gigabytes" ); 
 
         return rtn;
     }
@@ -187,7 +180,7 @@ public class MusicLoader {
         }
     }
 
-    private List<Track> loadMusicFiles(File directory) {
+    private List<Track> loadMusicFiles(File... directories) {
         long startTime = System.currentTimeMillis();
         //clear maps of any stale data
         albumArtCache.clear();
@@ -195,7 +188,14 @@ public class MusicLoader {
         genrePlaylistMap.clear();
 
         List<File[]> files = new ArrayList<>();
-        getMusicFilesRecursive(directory, files);
+        logger.info("Loading from " + directories.length + " directories.");
+        for (File dir : directories) {
+            logger.info("Loading from " + dir.getAbsolutePath());
+            if (dir.exists() && dir.isDirectory())
+                getMusicFilesRecursive(dir, files);
+            else
+                logger.warn("Could not access '" + dir.getAbsolutePath() + "', skipping");
+        }
         
         int size = 0;
         for (File[] f : files) {

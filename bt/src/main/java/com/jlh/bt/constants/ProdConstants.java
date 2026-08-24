@@ -16,6 +16,7 @@ class ProdConstants extends Constants {
     public String LOG_LEVEL() {return "debug";}
 
     public String ONBOARD_MEDIA_DIRECTORY() {return "/home/dodge/media";}
+    public String DETACHABLE_MEDIA_DIRECTORY() {return "/mnt/";} //TODO verify this
 
     public int STEERING_WHEEL_DEVICE() {return -1;}
     public int SW_LEFT_BUTTON() {return -1;}

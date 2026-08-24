@@ -13,8 +13,8 @@ public class MenuController {
     
     private Menu menu;
 
-    public MenuController(File directory) {
-        menu = MusicLoader.getInstance().constructHighLevelMenu(directory).getKey();
+    public MenuController(File... directories) {
+        menu = MusicLoader.getInstance().constructHighLevelMenu(directories).getKey();
     }
 
     public Menu getCurrentMenu() {
