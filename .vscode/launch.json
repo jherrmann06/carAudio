@@ -6,7 +6,7 @@
             "name": "Java-BT",
             "request": "launch",
             "mainClass": "com.jlh.bt.Main",
-            "vmArgs": "--module-path /usr/share/openjfx/lib/ --add-modules javafx.controls,javafx.fxml,javafx.media -Djol.magicFieldOffset=true"
+            "vmArgs": "--module-path /usr/share/openjfx/lib/ --add-modules javafx.controls,javafx.fxml,javafx.media --enable-native-access=javafx.media --enable-native-access=javafx.graphics --enable-native-access=ALL-UNNAMED"
         }
     ]
 }

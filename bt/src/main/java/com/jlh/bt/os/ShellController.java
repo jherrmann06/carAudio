@@ -30,6 +30,10 @@ public class ShellController {
         CONSTANTS = Constants.getInstance();
     }
 
+    private Process exec(String cmd) throws IOException {
+        return Runtime.getRuntime().exec(new String[] {"bash", "-c", cmd});
+    }
+
     /**
      * Reset the system audio volume to default value.
      */
@@ -40,7 +44,7 @@ public class ShellController {
         }
         logger.debug("Volume reset command issued.");
         try {
-            Runtime.getRuntime().exec("amixer -D pulse sset Master " + CONSTANTS.VOLUME_RESET_PERCENTAGE() + "%");
+            exec("amixer -D pulse sset Master " + CONSTANTS.VOLUME_RESET_PERCENTAGE() + "%");
         } catch (IOException e) {
             logger.error("IO exception occurred while resetting system volume", e);
         }
@@ -52,7 +56,7 @@ public class ShellController {
     public void incrementVolume() {
         logger.debug("Volume increment command issued.");
         try {
-            Runtime.getRuntime().exec("amixer -D pulse sset Master " + CONSTANTS.VOLUME_CHANGE_PERCENTAGE() + "%+");
+            exec("amixer -D pulse sset Master " + CONSTANTS.VOLUME_CHANGE_PERCENTAGE() + "%+");
         } catch (IOException e) {
             logger.error("IO exception occurred while incrementing system volume", e);
         }
@@ -64,7 +68,7 @@ public class ShellController {
     public void decrementVolume() {
         logger.debug("Volume decrement command issued");
         try {
-            Runtime.getRuntime().exec("amixer -D pulse sset Master " + CONSTANTS.VOLUME_CHANGE_PERCENTAGE() + "%-");
+            exec("amixer -D pulse sset Master " + CONSTANTS.VOLUME_CHANGE_PERCENTAGE() + "%-");
         } catch (IOException e) {
             logger.error("IO exception occurred while decrementing system volume", e);
         }
@@ -81,7 +85,7 @@ public class ShellController {
         }
 
         try {
-            Process proc = Runtime.getRuntime().exec("amixer -D pulse sget Master");
+            Process proc = exec("amixer -D pulse sget Master");
             proc.waitFor();
             for (int i = 0; i < 5; i++) {
                 proc.inputReader().readLine();
@@ -105,7 +109,7 @@ public class ShellController {
 
     private int getCurrentVolumeDev() {
         try {
-            Process proc = Runtime.getRuntime().exec("wpctl get-volume @DEFAULT_AUDIO_SINK@");
+            Process proc = exec("wpctl get-volume @DEFAULT_AUDIO_SINK@");
             String out = proc.inputReader().readLine().replace("[MUTED]", "");
             return (int)(Double.parseDouble(out.substring(7)) * 100);
         } catch (IOException e) {

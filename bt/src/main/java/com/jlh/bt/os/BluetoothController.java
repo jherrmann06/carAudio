@@ -1,12 +1,12 @@
 package com.jlh.bt.os;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.function.Consumer;
 
 import org.bluez.MediaPlayer1;
 import org.bluez.exceptions.BluezFailedException;
 import org.bluez.exceptions.BluezNotSupportedException;
-import org.freedesktop.dbus.DBusMap;
 import org.freedesktop.dbus.connections.impl.DBusConnection;
 import org.freedesktop.dbus.exceptions.DBusException;
 import org.freedesktop.dbus.interfaces.Properties;
@@ -37,7 +37,7 @@ public class BluetoothController {
         return INSTANCE;
     }
 
-    private final DBusMap<String, Object> errorMap;
+    private final HashMap<String, Object> errorMap;
 
     private final DeviceManager manager;
     private final DBusConnection conn;
@@ -59,12 +59,12 @@ public class BluetoothController {
         connectionHandler = () -> logger.warn("Connection event fired with no handler set.");
         disconnectionHandler = () -> logger.warn("Disconnection event fired with no handler set.");
 
-        Object[][] arr = new Object[3][3];
-        arr[0][0] = "Artist"; arr[0][1] = "";
-        arr[1][0] = "Album" ;  arr[1][1] = "";
-        arr[2][0] = "Title" ;  arr[2][1] = "";
+        // wtf is going on here???
+        errorMap = new HashMap<String, Object>();
+        errorMap.put("Artist", "");
+        errorMap.put("Album", "");
+        errorMap.put("Title", "");
 
-        errorMap = new DBusMap<>(arr);
 
         new Thread(
             () -> {while(true) {execute();}},
@@ -274,7 +274,7 @@ public class BluetoothController {
         }
     }
 
-    private DBusMap<String, Object> getBusMap() {
+    private HashMap<String, Object> getBusMap() {
         Properties props;
         try {
             props = getProperties();
@@ -283,7 +283,7 @@ public class BluetoothController {
                 return errorMap;
             }
 
-            DBusMap<String, Object> map = props.Get("org.bluez.MediaPlayer1", "Track");   
+            HashMap<String, Object> map = props.Get("org.bluez.MediaPlayer1", "Track");   
             logger.trace("Track properties key set: ");
             for (String s : map.keySet()) {
                 logger.trace("=====>" + s);

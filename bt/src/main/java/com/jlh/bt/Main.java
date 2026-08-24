@@ -60,7 +60,7 @@ public class Main {
         onboardUI = GUIDriver.getOnboardUIController();
         logger.debug("GUIDriver successfully provided UI controller");
 
-        menu = new MenuController(new File(CONSTANTS.ONBOARD_MEDIA_DIRECTORY()));
+        menu = new MenuController(new File(CONSTANTS.ONBOARD_MEDIA_DIRECTORY()), new File(CONSTANTS.DETACHABLE_MEDIA_DIRECTORY()));
         media = new MediaController(() -> {onboardUI.updateTrack(); bluetoothUI.updateTrack();});
 
         onboardUI.setOnboardController(media, menu);
