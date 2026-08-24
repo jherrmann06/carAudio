@@ -15,8 +15,8 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
+    <maven.compiler.source>25</maven.compiler.source>
+    <maven.compiler.target>25</maven.compiler.target>
     <pi4j.version>2.5.1</pi4j.version>
   </properties>
 
@@ -31,38 +31,38 @@
     <dependency>
       <groupId>com.github.hypfvieh</groupId>
       <artifactId>dbus-java-core</artifactId>
-      <version>4.3.2</version>
+      <version>5.2.0</version>
     </dependency>
 
     <dependency>
       <groupId>com.github.hypfvieh</groupId>
       <artifactId>dbus-java-transport-jnr-unixsocket</artifactId>
-      <version>4.3.2</version>
+      <version>5.2.0</version>
       <scope>runtime</scope>
     </dependency>
 
     <dependency>
       <groupId>com.github.hypfvieh</groupId>
       <artifactId>bluez-dbus</artifactId>
-      <version>0.1.4</version>
+      <version>0.3.5</version>
     </dependency>
 
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-controls</artifactId>
-      <version>21</version>
+      <version>25</version>
     </dependency>
 
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-fxml</artifactId>
-      <version>21</version>
+      <version>25</version>
     </dependency>
 
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-media</artifactId>
-      <version>21</version>
+      <version>25</version>
     </dependency>
 
     <dependency>
@@ -74,19 +74,19 @@
     <dependency>
       <groupId>tel.schich</groupId>
       <artifactId>javacan-core</artifactId>
-      <version>3.5.0</version>
+      <version>3.5.2</version>
     </dependency>
 
     <dependency>
       <groupId>tel.schich</groupId>
       <artifactId>javacan-epoll</artifactId>
-      <version>3.5.0</version>
+      <version>3.5.2</version>
     </dependency>
 
     <dependency>
       <groupId>org.controlsfx</groupId>
       <artifactId>controlsfx</artifactId>
-      <version>11.2.2</version>
+      <version>11.2.4</version>
     </dependency>
 
     <dependency> <!-- Necessary for CAN button simulation in dev environment -->
@@ -94,18 +94,6 @@
       <artifactId>jnativehook</artifactId>
       <version>2.2.2</version>
     </dependency> 
-    
-    <dependency>
-      <groupId>tel.schich</groupId>
-      <artifactId>javacan-core</artifactId>
-      <version>3.5.0</version>
-    </dependency>
-
-    <dependency>
-      <groupId>com.github.jbellis</groupId>
-      <artifactId>jamm</artifactId>
-      <version>0.4.0</version>
-    </dependency>
         
   </dependencies>
 

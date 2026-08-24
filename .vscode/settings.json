@@ -1,5 +1,5 @@
 {
-    "java.configuration.updateBuildConfiguration": "interactive",
+    "java.configuration.updateBuildConfiguration": "automatic",
     "cSpell.words": [
         "amixer",
         "bluetoothctl",
@@ -10,6 +10,16 @@
         "Raspi",
         "sget",
         "sset"
+    ],
+    "cSpell.ignorePaths": [
+        "package-lock.json",
+        "node_modules",
+        "vscode-extension",
+        ".git/{info,lfs,logs,refs,objects}/**",
+        ".git/{index,*refs,*HEAD}",
+        ".vscode",
+        ".vscode-insiders",
+        "pom.xml"
     ],
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
