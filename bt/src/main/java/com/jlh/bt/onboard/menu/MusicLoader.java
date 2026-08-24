@@ -12,6 +12,10 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.function.Function;
 
+import org.jaudiotagger.audio.AudioFile;
+import org.jaudiotagger.audio.AudioFileIO;
+import org.jaudiotagger.tag.FieldKey;
+import org.jaudiotagger.tag.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,9 +24,6 @@ import com.jlh.bt.gui.NotificationSender;
 import com.jlh.bt.onboard.media.Playlist;
 import com.jlh.bt.onboard.media.Track;
 import com.jlh.bt.util.Pair;
-import com.mpatric.mp3agic.ID3v1;
-import com.mpatric.mp3agic.ID3v2;
-import com.mpatric.mp3agic.Mp3File;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -212,34 +213,25 @@ public class MusicLoader {
         }
 
         List<Track> trackList = new ArrayList<>(audioFiles.length);
-        logger.info(audioFiles.length + " mp3 files found.");
+        logger.info(audioFiles.length + " music files found.");
 
         HashMap<String, Object> albumTable = new HashMap<>(); //take advantage of hashmap constant time reads to store album names
 
         int id = 0;
         for (File f : audioFiles) {
-            Mp3File metadata;
+            AudioFile metadata;
             try {
-                metadata = new Mp3File(f);
-                if (metadata.hasId3v2Tag()) {
-                    ID3v2 tags = metadata.getId3v2Tag();
-                    
-                    //for some reason this object is the only one which will do the release year properly
-                    int year = 0;
-                    try {
-                        ID3v1 yearTag = metadata.getId3v1Tag();
-                        year = parseNumericalString(yearTag.getYear());
-                    }catch(Exception e) {
-                        logger.info("Audio file " + f.getName() + " has issue with release year tagging. Using default year value.");
-                    }
+                metadata = AudioFileIO.read(f);
+                Tag tags = metadata.getTag();
+                if (tags != null) {
                     Track newTrack = new Track(
                         id, 
-                        tags.getTitle(), 
-                        tags.getArtist(), 
-                        tags.getAlbum(), 
-                        convertGenreIdToString(tags.getGenre()),
-                        parseNumericalString(tags.getTrack()),
-                        year,
+                        tags.getFirst(FieldKey.TITLE), 
+                        tags.getFirst(FieldKey.ARTIST), 
+                        tags.getFirst(FieldKey.ALBUM), 
+                        tags.getFirst(FieldKey.GENRE),
+                        parseNumericalString(tags.getFirst(FieldKey.TRACK)),
+                        parseNumericalString(tags.getFirst(FieldKey.YEAR)),
                         f
                     );
                     id++;
@@ -248,20 +240,17 @@ public class MusicLoader {
                     updatePlaylistMap(artistPlaylistMap, newTrack.artist(), newTrack);
                     updatePlaylistMap(genrePlaylistMap, newTrack.genre(), newTrack);
 
-                    if (albumTable.get(newTrack.artist() + "-" + newTrack.album()) == null) {
-                        albumTable.put(newTrack.artist() + "-" + newTrack.album(), new Object());
+                    String albumId = newTrack.artist() + "-" + newTrack.album();
+
+                    if (!albumTable.containsKey(albumId)) {
+                        albumTable.put(albumId, new Object()); // track album count
                     }
 
-                    if (tags.getAlbumImage() == null) {
-                        logger.info("Album " + tags.getAlbum() + " has no art");
-                    }
-
-                    if (
-                        tags.getAlbumImage() != null 
-                        && !albumArtCache.containsKey(tags.getArtist() + "-" + tags.getAlbum())
-                    ) {
-                        logger.trace("Album " + tags.getArtist() + "-" + tags.getAlbum() + " has art, adding to map.");
-                        albumArtCache.put(tags.getArtist() + "-" + tags.getAlbum(), tags.getAlbumImage());
+                    if (tags.getFirstArtwork() == null) {
+                        logger.warn("Album " + newTrack.album() + " has no art");
+                    }else if(!albumArtCache.containsKey(albumId)) {
+                        logger.trace("Album " + albumId + " has art, adding to map.");
+                        albumArtCache.put(albumId, tags.getFirstArtwork().getBinaryData());
                     }
 
                 }else {
@@ -304,6 +293,7 @@ public class MusicLoader {
         try {
             return Integer.parseInt(str);
         }catch (NumberFormatException e) {
+            logger.warn("Failed to parse number from string " + str, e);
             return 0;
         }
     }
@@ -325,35 +315,6 @@ public class MusicLoader {
     public byte[] getAlbumArt(Track track) {
 
         return albumArtCache.get(track.artist() + "-" + track.album());
-    }
-
-    /**
-     * Convert Id3v2 genre IDs into human-readable genres. 
-     * Only a subset are converted because there's no chance im going to listen to most of the genres on the list. 
-     * 
-     * See https://exiftool.org/TagNames/ID3.html
-     */
-    private String convertGenreIdToString(int genre) {
-        switch (genre) {
-            case 2:
-                return "Country";
-            case 6:
-                return "Grunge";
-            case 9:
-                return "Metal";
-            case 15:
-                return "Rap";
-            case 17:
-                return "Rock";
-            case 43:
-                return "Punk";
-            case 66:
-                return "New Wave";
-            case 131:
-                return "Indie / Alternative";
-            default:
-                return "Unknown";
-        }
     }
 
 }
