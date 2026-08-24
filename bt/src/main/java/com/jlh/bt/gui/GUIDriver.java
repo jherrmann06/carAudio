@@ -1,5 +1,8 @@
 package com.jlh.bt.gui;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +24,7 @@ public class GUIDriver extends Application {
     private Constants CONSTANTS;
     private static volatile MusicSpotlightController spotlightController = null;
     private static volatile OnboardMediaSelectorController onboardController  = null;
+    private static CompletableFuture<Void> future = new CompletableFuture<>();
 
     private static Stage stage;
     private static Scene spotlight;
@@ -57,6 +61,7 @@ public class GUIDriver extends Application {
         stage.setFullScreen(CONSTANTS.IS_UI_FULLSCREEN());
         stage.setFullScreenExitHint("");
         stage.show();
+        future.complete(null);
 
         logger.info("UI resource loading complete, UI shown.");
     }
@@ -68,6 +73,14 @@ public class GUIDriver extends Application {
             Platform.runLater(() -> stage.setScene(spotlight));
         }
         spotlightShown = !spotlightShown;
+    }
+
+    /**
+     * Controllers should be accessed using their getters.
+     * @return A future which completes when both controllers are available
+     */
+    public static CompletableFuture<Void> getControllersFuture() {
+        return future;
     }
 
     public static synchronized MusicSpotlightController getBluetoothUIController() {

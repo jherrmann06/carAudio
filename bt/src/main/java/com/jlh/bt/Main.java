@@ -2,6 +2,7 @@ package com.jlh.bt;
 
 import java.io.File;
 import java.lang.reflect.Method;
+import java.util.concurrent.ExecutionException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,11 +33,11 @@ public class Main {
 
     private final Constants CONSTANTS;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException, ExecutionException {
         new Main(args);
     }
 
-    private Main(String[] args) {
+    private Main(String[] args) throws InterruptedException, ExecutionException {
         CONSTANTS = Constants.getInstance();
 
         System.setProperty(CONSTANTS.LOG_LEVEL_CLASSES_PROPERTY(), CONSTANTS.LOG_LEVEL());
@@ -53,9 +54,7 @@ public class Main {
             "GUI driver thread"
         ).start();
 
-        while (GUIDriver.getBluetoothUIController() == null || GUIDriver.getOnboardUIController() == null) {
-            //do nothing
-        }
+        GUIDriver.getControllersFuture().get(); // block until controllers are ready
 
         bluetoothUI = GUIDriver.getBluetoothUIController();
         onboardUI = GUIDriver.getOnboardUIController();
