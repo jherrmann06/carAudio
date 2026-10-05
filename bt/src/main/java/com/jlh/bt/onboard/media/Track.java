@@ -1,14 +1,16 @@
 package com.jlh.bt.onboard.media;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.util.Comparator;
 
 /**
  * This class represents a single track. 
  */
-public record Track(int id, String name, String artist, String album, String genre, int trackNo, int albumReleaseYear, File file) implements Comparable<Track> {
+public record Track(int id, String name, String artist, String album, String genre, int trackNo, LocalDate albumReleaseDate, File file) implements Comparable<Track> {
 
-    public static final Track NOTHING = new Track(-1, "No track", "-", "-", "", -1, -1, null);
+    public static final LocalDate UNKNOWN_DATE = LocalDate.of(3000, 1, 1);
+    public static final Track NOTHING = new Track(-1, "No track", "-", "-", "", -1, UNKNOWN_DATE, null);
 
     @Override
     public String toString() {
@@ -17,13 +19,13 @@ public record Track(int id, String name, String artist, String album, String gen
 
     public String toStringLong() {
         return 
-            "ID:       " + id + "\n" + 
-            "name:     " + name + "\n" +
-            "artist:   " + artist + "\n" + 
-            "album:    " + album + "\n" + 
-            "genre:    " + genre + "\n" + 
-            "track no. : " + trackNo + "\n" + 
-            "release yr: " + albumReleaseYear ;
+            "ID:          " + id + "\n" + 
+            "name:        " + name + "\n" +
+            "artist:      " + artist + "\n" + 
+            "album:       " + album + "\n" + 
+            "genre:       " + genre + "\n" + 
+            "track no.:   " + trackNo + "\n" + 
+            "release date:" + albumReleaseDate ;
     }
 
     @Override
@@ -34,7 +36,7 @@ public record Track(int id, String name, String artist, String album, String gen
         //albums are different
         if(other.artist.equals(this.artist)) {
             //albums in order of most recent to least recent (reverse numerical)
-            return other.albumReleaseYear - this.albumReleaseYear; 
+            return other.albumReleaseDate().compareTo(this.albumReleaseDate);
         }
 
         //artist is different

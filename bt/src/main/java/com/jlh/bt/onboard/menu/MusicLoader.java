@@ -3,6 +3,7 @@ package com.jlh.bt.onboard.menu;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileFilter;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HexFormat;
@@ -229,9 +230,9 @@ public class MusicLoader {
                         tags.getFirst(FieldKey.TITLE), 
                         tags.getFirst(FieldKey.ARTIST), 
                         tags.getFirst(FieldKey.ALBUM), 
-                        tags.getFirst(FieldKey.GENRE),
-                        parseNumericalString(tags.getFirst(FieldKey.TRACK)),
-                        parseNumericalString(tags.getFirst(FieldKey.YEAR)),
+                        tags.getFirst(FieldKey.CUSTOM2),
+                        parseNumericalString(tags.getFirst(FieldKey.TRACK), 0),
+                        parseDateString(tags.getFirst(FieldKey.YEAR)),
                         f
                     );
                     id++;
@@ -289,13 +290,44 @@ public class MusicLoader {
         return trackList;
     }
 
-    private int parseNumericalString(String str) {
+    private int parseNumericalString(String str, int defaultVal) {
         try {
             return Integer.parseInt(str);
         }catch (NumberFormatException e) {
             logger.warn("Failed to parse number from string " + str, e);
-            return 0;
+            return defaultVal;
         }
+    }
+
+    private LocalDate parseDateString(String str) {
+        // may be year, month, or day precision
+        String[] tokens = str.split("-");
+        if (tokens.length == 1) {
+            return LocalDate.of(
+                parseNumericalString(tokens[0], Track.UNKNOWN_DATE.getYear()),
+                Track.UNKNOWN_DATE.getMonthValue(),
+                Track.UNKNOWN_DATE.getDayOfMonth()
+            );
+        }
+            
+        if (tokens.length == 2) {
+            return LocalDate.of(
+                parseNumericalString(tokens[0], Track.UNKNOWN_DATE.getYear()),
+                parseNumericalString(tokens[1], Track.UNKNOWN_DATE.getMonthValue()),
+                Track.UNKNOWN_DATE.getDayOfMonth()
+            );
+        }
+            
+        if (tokens.length == 3) {
+            return LocalDate.of(
+                parseNumericalString(tokens[0], Track.UNKNOWN_DATE.getYear()),
+                parseNumericalString(tokens[1], Track.UNKNOWN_DATE.getMonthValue()),
+                parseNumericalString(tokens[2], Track.UNKNOWN_DATE.getDayOfMonth())
+            );
+        }
+
+        logger.warn("Invalid date string format: " + str);
+        return Track.UNKNOWN_DATE;
     }
 
     private void updatePlaylistMap(SortedMap<String, Playlist> map, String key, Track track) {
